@@ -1,0 +1,30 @@
+name: testing the needs
+on: [push, pull_request, workflow_dispatch]
+
+jobs:
+  Start-Job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checking out the repository
+        uses: actions/checkout@v3
+
+  Build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: 3.10
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install upgreade-pip
+          python -m pip install pytest
+
+  Test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run the Python Test Scripts
+        run: |
+          export PYTHONPATH=Scripts
+          pytest -vs
